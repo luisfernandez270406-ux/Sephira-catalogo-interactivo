@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SÉPHIRA | Tu tienda en línea</title>
+
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <a href="#inicio" class="logo"> SÉPHIRA </a>
+
+        <nav class="nav">
+          <a href="#inicio">Inicio</a>
+          <a href="#catalogo">Catálogo</a>
+        </nav>
+
+        <form id="headerSearchForm" class="header-search">
+          <input
+            type="search"
+            id="headerSearchInput"
+            placeholder="Buscar productos..."
+            autocomplete="off"
+          />
+
+          <button type="submit" aria-label="Buscar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6"></circle>
+              <line x1="16" y1="16" x2="21" y2="21"></line>
+            </svg>
+          </button>
+        </form>
+
+        <button class="cart-button" id="cartButton">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H7"
+            ></path>
+            <circle cx="10" cy="20" r="1"></circle>
+            <circle cx="18" cy="20" r="1"></circle>
+          </svg>
+
+          <span>Carrito</span>
+
+          <span id="cartCount" class="cart-count hidden"> 0 </span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- INICIO -->
+      <section class="hero" id="inicio">
+        <div class="container hero-content">
+          <div class="hero-text">
+            <p class="hero-subtitle">BIENVENIDO A SÉPHIRA</p>
+
+            <h1>
+              Todo lo que buscas,
+              <span>en un solo lugar.</span>
+            </h1>
+
+            <p>
+              Explora nuestro catálogo y encuentra productos para diferentes
+              necesidades y estilos.
+            </p>
+
+            <a href="#catalogo" class="hero-button"> Explorar catálogo </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATÁLOGO -->
+      <section class="catalog" id="catalogo">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-subtitle">NUESTROS PRODUCTOS</p>
+
+            <h2>Explora el catálogo</h2>
+
+            <p>
+              Encuentra lo que necesitas utilizando la búsqueda o seleccionando
+              una categoría.
+            </p>
+          </div>
+
+          <!-- BUSCADOR Y FILTROS -->
+          <div class="catalog-controls">
+
+            <div class="category-control">
+              <label for="categorySelect"> Categoría </label>
+
+              <select id="categorySelect">
+                <option value="all">Todas las categorías</option>
+              </select>
+            </div>
+          </div>
+          <!-- PRODUCTOS -->
+          <div id="productsContainer" class="products-grid">
+            <p class="loading-message">Cargando productos...</p>
+          </div>
+        </div>
+      </section>
+      <!-- CARRITO -->
+      <section class="cart-section" id="carrito" hidden>
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-subtitle">TU COMPRA</p>
+            <h2>Carrito</h2>
+          </div>
+
+          <div id="cartContainer" class="cart-container"></div>
+
+          <div class="cart-summary">
+            <p>
+              Total:
+              <strong id="cartTotal">$0.00</strong>
+            </p>
+
+            <button id="clearCartButton">Vaciar carrito</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© 2026 SÉPHIRA. Proyecto académico.</p>
+      </div>
+    </footer>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
