@@ -74,8 +74,6 @@ sephira/
 ```
 ## Ejecución del proyecto
 
-Para ejecutar SÉPHIRA no es necesario instalar Node.js, una base de datos ni otras dependencias. El proyecto utiliza HTML, CSS y JavaScript Vanilla, y los productos se cargan desde una API externa.
-
 ### Requisitos
 
 Antes de ejecutar el proyecto se necesita:
