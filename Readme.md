@@ -1,6 +1,6 @@
 # SÉPHIRA
 
-SÉPHIRA es una aplicación web tipo SPA (Single Page Application) desarrollada con JavaScript Vanilla. Su objetivo es presentar un catálogo de productos interactivo donde el usuario puede buscar productos, filtrarlos por categoría y agregarlos a un carrito de compras.
+SÉPHIRA es una aplicación web tipo SPA  desarrollada con JavaScript Vanilla. Su objetivo es presentar un catálogo de productos interactivo donde el usuario puede buscar productos, filtrarlos por categoría y agregarlos a un carrito de compras.
 
 El proyecto fue desarrollado como una actividad académica para demostrar el uso de JavaScript moderno, manipulación dinámica del DOM, manejo de eventos y consumo de datos mediante una API.
 
