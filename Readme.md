@@ -71,3 +71,29 @@ sephira/
 │   └── events.js
 │
 └── README.md
+```
+## Ejecución del proyecto
+
+Para ejecutar SÉPHIRA no es necesario instalar Node.js, una base de datos ni otras dependencias. El proyecto utiliza HTML, CSS y JavaScript Vanilla, y los productos se cargan desde una API externa.
+
+### Requisitos
+
+Antes de ejecutar el proyecto se necesita:
+
+- Un navegador web actualizado, como Google Chrome, Microsoft Edge, Mozilla Firefox u Opera.
+- Visual Studio Code.
+- Extensión Live Server para Visual Studio Code.
+- Conexión a Internet para cargar los productos desde la API.
+
+### Instalación
+
+1. Descargar o clonar el repositorio de GitHub.
+
+```bash
+git clone https://github.com/luisfernandez270406-ux/Sephira-catalogo-interactivo
+```
+2. Abrir la carpeta del proyecto en Visual Studio Code.
+3. Instalar la extensión Live Server en Visual Studio Code si todavía no está instalada
+4. Hacer clic derecho sobre index.html y seleccionar: Open with Live Server
+   
+El proyecto se abrirá automáticamente en el navegador mediante una dirección local proporcionada por Live Server.
