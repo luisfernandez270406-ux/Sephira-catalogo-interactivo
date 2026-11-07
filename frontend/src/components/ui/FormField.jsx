@@ -1,4 +1,4 @@
-const FormField = ({ label, name, value, onChange, error, type = "text", as = "input", ...props }) => {
+const FormField = ({ label, name, value, onChange, error, type = "text", as = "input", children, ...props }) => {
   const Component = as;
 
   return (
@@ -16,7 +16,9 @@ const FormField = ({ label, name, value, onChange, error, type = "text", as = "i
           error ? "border-red-500" : "border-ink/20"
         }`}
         {...props}
-      />
+      >
+        {children}
+      </Component>
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
     </div>
   );
