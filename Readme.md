@@ -1,97 +1,163 @@
-# SÉPHIRA
+# SÉPHIRA — Panel de administración
 
-SÉPHIRA es una aplicación web tipo SPA  desarrollada con JavaScript Vanilla. Su objetivo es presentar un catálogo de productos interactivo donde el usuario puede buscar productos, filtrarlos por categoría y agregarlos a un carrito de compras.
+Panel de administración para una tienda: gestiona productos, categorías y pedidos, con un dashboard de métricas. Desarrollado con React, Tailwind CSS, Redux Toolkit y un backend propio en Node/Express conectado a MongoDB Atlas.
 
-El proyecto fue desarrollado como una actividad académica para demostrar el uso de JavaScript moderno, manipulación dinámica del DOM, manejo de eventos y consumo de datos mediante una API.
-
-## Objetivo
-
-Desarrollar una aplicación web interactiva utilizando JavaScript puro, aplicando características de ECMAScript 6+, manipulación del DOM, manejo de eventos, funciones asíncronas y una estructura modular.
+SÉPHIRA comenzó como un catálogo interactivo en JavaScript puro (Actividad 1, carpeta `act1-vanilla/`) y en esta actividad evoluciona a un panel de gestión con frameworks de frontend, estado global y base de datos.
 
 ## Funcionalidades
 
-- Visualización dinámica de productos.
-- Búsqueda de productos.
-- Filtrado por categoría.
-- Carrito de compras.
-- Agregar productos al carrito.
-- Aumento automático de cantidad al agregar un producto repetido.
-- Eliminación individual de productos del carrito.
-- Vaciar completamente el carrito.
-- Cálculo automático del total.
-- Contador de productos del carrito.
-- Panel lateral para visualizar el carrito.
-- Animación de apertura y cierre del carrito.
-- Diseño adaptable a diferentes tamaños de pantalla.
-- Carga inicial de productos mediante una API.
-- Interacción sin recargar la página.
+- CRUD completo de **productos**, **categorías** y **pedidos**.
+- Formularios con validación en el cliente y en el servidor.
+- Tablas con búsqueda y filtros (por nombre, categoría y estado).
+- Pedidos armados con un carrito; el total lo calcula el backend.
+- Dashboard con ingresos, conteos, pedidos por estado y últimos pedidos.
+- Sidebar y diseño responsive.
+- Navegación entre secciones controlada por estado de Redux (sin react router).
 
-## Tecnologías utilizadas
+## Secciones
 
-- HTML5
-- CSS3
-- JavaScript Vanilla
-- ECMAScript 6+
-- Fetch API
-- API REST
-- Git y GitHub
+1. Landing
+2. Dashboard
+3. Productos
+4. Categorías
+5. Pedidos
+6. Acerca de
 
-## API utilizada
+## Tecnologías
 
-Los productos son obtenidos mediante la siguiente API:
+| Capa | Tecnología |
+| --- | --- |
+| Frontend | React, Vite, Tailwind CSS |
+| Estado global | Redux Toolkit, React Redux |
+| Backend | Node.js, Express |
+| Base de datos | MongoDB Atlas, Mongoose |
 
-https://fakestoreapi.noksha.dev/api/products
+## Custom hooks
 
-La información obtenida incluye datos como:
+| Hook | Función |
+| --- | --- |
+| `useModal` | Abrir y cerrar modales, guardando el elemento en edición |
+| `useForm` | Valores, validación, errores y envío de formularios |
+| `useDebounce` | Retrasar la búsqueda mientras el usuario escribe |
+| `useCart` | Carrito de productos de un pedido, con totales |
+| `useFetch` | Cargar datos con estados de carga y error |
 
-- Nombre del producto.
-- Precio.
-- Categoría.
-- Descripción.
-- Imagen.
-- Marca.
-- Stock.
-- Calificación.
-
-## Estructura del proyecto
+## Estructura del repositorio
 
 ```text
-sephira/
-│
-├── index.html
-│
-├── css/
-│   └── styles.css
-│
-├── js/
-│   ├── main.js
-│   ├── api.js
-│   ├── state.js
-│   ├── ui.js
-│   └── events.js
-│
-└── README.md
+├── act1-vanilla/        Actividad 1 (catálogo en JavaScript puro)
+├── backend/
+│   └── src/
+│       ├── config/      Conexión a MongoDB
+│       ├── models/      Esquemas de Mongoose
+│       ├── controllers/ Lógica de cada endpoint
+│       ├── routes/      Rutas de la API
+│       ├── seed.js      Datos de ejemplo
+│       └── server.js
+└── frontend/
+    └── src/
+        ├── components/  layout, ui, shared, products, orders, categories
+        ├── constants/
+        ├── hooks/       Los 5 custom hooks
+        ├── sections/    Las secciones de la app
+        ├── services/    Llamadas al backend
+        ├── store/       Redux (store y slices)
+        └── utils/
 ```
-## Ejecución del proyecto
 
-### Requisitos
+## Requisitos previos
 
-Antes de ejecutar el proyecto se necesita:
+- **Node.js** 18.11 o superior (recomendado 20 o más). Verifica con `node -v`.
+- **npm**.
+- **Git**.
+- Una cuenta gratuita de **MongoDB Atlas**.
+- Conexión a internet.
 
-- Un navegador web actualizado, como Google Chrome, Microsoft Edge, Mozilla Firefox u Opera.
-- Visual Studio Code.
-- Extensión Live Server para Visual Studio Code.
-- Conexión a Internet para cargar los productos desde la API.
+## Instalación y ejecución
 
-### Instalación
-
-1. Descargar o clonar el repositorio de GitHub.
+### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/luisfernandez270406-ux/Sephira-catalogo-interactivo
+git clone https://github.com/luisfernandez270406-ux/Sephira-catalogo-interactivo.git
+cd Sephira-catalogo-interactivo
 ```
-2. Abrir la carpeta del proyecto en Visual Studio Code.
-3. Instalar la extensión Live Server en Visual Studio Code si todavía no está instalada
-4. Hacer clic derecho sobre index.html y seleccionar: Open with Live Server
-   
-El proyecto se abrirá automáticamente en el navegador mediante una dirección local proporcionada por Live Server.
+
+### 2. Configurar MongoDB Atlas
+
+1. Crea un clúster gratuito (M0) en MongoDB Atlas.
+2. En **Database Access**, crea un usuario con contraseña (evita caracteres especiales como `@`, `:` o `/`).
+3. En **Network Access**, agrega `0.0.0.0/0` para permitir la conexión desde cualquier IP (solo para desarrollo y pruebas).
+4. En **Connect → Drivers**, copia la cadena de conexión (`mongodb+srv://...`), reemplaza `<password>` por tu contraseña y agrega el nombre de la base de datos antes del `?`, por ejemplo `.../sephira?retryWrites=true&w=majority`.
+
+### 3. Backend
+
+```bash
+cd backend
+npm install
+```
+
+Crea el archivo `backend/.env` (usa `backend/.env.example` como plantilla):
+
+```env
+PORT=4000
+MONGODB_URI=tu_cadena_de_conexion_de_atlas
+```
+
+Carga los datos de ejemplo:
+
+```bash
+npm run seed
+```
+
+
+Inicia el servidor:
+
+```bash
+npm run dev
+```
+
+Debe mostrar `MongoDB Atlas conectado` y quedar escuchando en `http://localhost:4000`. Comprobación rápida: abre `http://localhost:4000/api/health`.
+
+### 4. Frontend
+
+En otra terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Abre la dirección que muestra Vite (normalmente `http://localhost:5173`).
+
+Por defecto el frontend usa `http://localhost:4000/api`. Si cambias el puerto o la dirección del backend, crea `frontend/.env` con:
+
+```env
+VITE_API_URL=http://localhost:4000/api
+```
+
+### 5. Compilar para producción (opcional)
+
+```bash
+cd frontend
+npm run build
+```
+
+## API REST
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/api/health` | Estado del servidor |
+| GET, POST | `/api/categories` | Listar y crear categorías |
+| PUT, DELETE | `/api/categories/:id` | Editar y eliminar (no se elimina si tiene productos) |
+| GET, POST | `/api/products` | Listar y crear productos |
+| PUT, DELETE | `/api/products/:id` | Editar y eliminar productos |
+| GET, POST | `/api/orders` | Listar y crear pedidos (el total lo calcula el servidor) |
+| PUT, DELETE | `/api/orders/:id` | Editar datos y estado, eliminar pedidos |
+| GET | `/api/stats` | Métricas del dashboard |
+
+## Limitaciones conocidas y mejoras futuras
+
+- No hay autenticación: cualquier persona con acceso a la app puede entrar al panel.
+- Crear un pedido no descuenta el stock de los productos.
+- Tienda pública con catálogo y carrito para clientes
