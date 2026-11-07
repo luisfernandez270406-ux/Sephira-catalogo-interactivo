@@ -63,31 +63,6 @@ const About = () => (
         </a>
       </Card>
 
-      <Card title="Datos académicos">
-        <dl className="space-y-2 text-sm">
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink/60">Universidad</dt>
-            <dd className="text-right font-medium">COMPLETAR</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink/60">Materia</dt>
-            <dd className="text-right font-medium">COMPLETAR</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink/60">Carrera</dt>
-            <dd className="text-right font-medium">COMPLETAR</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink/60">Docente</dt>
-            <dd className="text-right font-medium">Prof. Anggelo Huz</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink/60">Autor</dt>
-            <dd className="text-right font-medium">COMPLETAR</dd>
-          </div>
-        </dl>
-      </Card>
-
       <Card title="Tecnologías">
         <ul className="space-y-3">
           {TECHNOLOGIES.map(({ name, role }) => (
