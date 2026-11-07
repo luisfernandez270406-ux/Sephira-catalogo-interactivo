@@ -4,22 +4,32 @@ export const useFetch = (fetcher) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError("");
-    try {
-      setData(await fetcher());
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [fetcher]);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    let cancelled = false;
 
-  return { data, loading, error, refetch: load };
+    fetcher()
+      .then((result) => {
+        if (!cancelled) setData(result);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fetcher, reloadKey]);
+
+  const refetch = useCallback(() => {
+    setLoading(true);
+    setError("");
+    setReloadKey((key) => key + 1);
+  }, []);
+
+  return { data, loading, error, refetch };
 };
