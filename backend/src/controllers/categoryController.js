@@ -1,4 +1,5 @@
 import Category from "../models/Category.js";
+import Product from "../models/Product.js";
 
 export const getCategories = async (req, res) => {
   try {
@@ -40,7 +41,13 @@ export const updateCategory = async (req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
-  try {
+  try { 
+    const inUse = await Product.countDocuments({ category: req.params.id });
+        if (inUse > 0) {
+        return res.status(400).json({
+            message: `No se puede eliminar: tiene ${inUse} producto(s) asociado(s)`,
+        });
+    }
     const category = await Category.findByIdAndDelete(req.params.id);
     if (!category) {
       return res.status(404).json({ message: "Categoría no encontrada" });
