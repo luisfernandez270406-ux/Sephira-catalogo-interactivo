@@ -161,3 +161,5 @@ npm run build
 - No hay autenticación: cualquier persona con acceso a la app puede entrar al panel.
 - Crear un pedido no descuenta el stock de los productos.
 - Tienda pública con catálogo y carrito para clientes
+- ## Video de demostración
+- https://youtu.be/P8bUNMmxVbo
