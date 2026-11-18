@@ -1,19 +1,22 @@
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setView, closeSidebar } from "../../store/slices/uiSlice";
+import { closeSidebar } from "../../store/slices/uiSlice";
+import { logout } from "../../store/slices/authSlice";
 import { NAV_ITEMS } from "../../constants/navigation";
 import NavItem from "./NavItem";
+import Button from "../ui/Button";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const { currentView, sidebarOpen } = useSelector((state) => state.ui);
+  const sidebarOpen = useSelector((state) => state.ui.sidebarOpen);
+  const user = useSelector((state) => state.auth.user);
+
+  const handleClose = () => dispatch(closeSidebar());
 
   return (
     <>
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/40 md:hidden"
-          onClick={() => dispatch(closeSidebar())}
-        />
+        <div className="fixed inset-0 z-30 bg-black/40 md:hidden" onClick={handleClose} />
       )}
 
       <aside
@@ -21,26 +24,34 @@ const Sidebar = () => {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <button
-          onClick={() => dispatch(setView("landing"))}
-          className="mb-8 px-4 py-2 text-left text-2xl font-bold tracking-widest"
+        <Link
+          to="/"
+          onClick={handleClose}
+          className="mb-8 px-4 py-2 text-2xl font-bold tracking-widest"
         >
           SÉPHIRA
-        </button>
+        </Link>
 
         <nav className="flex flex-1 flex-col gap-1">
-          {NAV_ITEMS.map(({ id, label, icon }) => (
+          {NAV_ITEMS.map(({ id, label, icon, to, end }) => (
             <NavItem
               key={id}
               label={label}
               icon={icon}
-              active={currentView === id}
-              onClick={() => dispatch(setView(id))}
+              to={to}
+              end={end}
+              onClick={handleClose}
             />
           ))}
         </nav>
 
-        <p className="px-4 text-xs text-white/50">Panel de administración</p>
+        <div className="border-t border-white/10 pt-4">
+          <p className="truncate px-4 text-sm font-medium">{user?.name}</p>
+          <p className="mb-3 truncate px-4 text-xs text-white/60">{user?.email}</p>
+          <Button variant="accent" className="w-full" onClick={() => dispatch(logout())}>
+            Cerrar sesión
+          </Button>
+        </div>
       </aside>
     </>
   );

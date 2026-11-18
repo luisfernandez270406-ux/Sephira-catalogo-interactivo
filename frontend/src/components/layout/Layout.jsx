@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toggleSidebar } from "../../store/slices/uiSlice";
 import Sidebar from "./Sidebar";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const dispatch = useDispatch();
 
   return (
@@ -21,7 +22,9 @@ const Layout = ({ children }) => {
           <span className="font-bold tracking-widest text-primary-dark">SÉPHIRA</span>
         </header>
 
-        <main className="p-4 md:p-8">{children}</main>
+        <main className="p-4 md:p-8">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

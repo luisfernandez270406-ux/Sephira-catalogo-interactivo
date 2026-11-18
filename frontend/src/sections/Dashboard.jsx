@@ -56,10 +56,10 @@ const Dashboard = () => {
       {stats.data && (
         <>
           <div className="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <StatCard title="Ingresos" value={formatPrice(stats.data.revenue)} icon="💰" highlight />
-            <StatCard title="Pedidos" value={stats.data.totalOrders} icon="📦" />
-            <StatCard title="Productos" value={stats.data.totalProducts} icon="🛍️" />
-            <StatCard title="Categorías" value={stats.data.totalCategories} icon="🏷️" />
+            <StatCard title="Ingresos" value={formatPrice(stats.data.revenue)} icon="" highlight />
+            <StatCard title="Pedidos" value={stats.data.totalOrders} icon="" />
+            <StatCard title="Productos" value={stats.data.totalProducts} icon="" />
+            <StatCard title="Categorías" value={stats.data.totalCategories} icon="" />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
