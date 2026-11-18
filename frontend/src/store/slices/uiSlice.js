@@ -1,18 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  currentView: "landing",
-  sidebarOpen: false,
-};
-
 const uiSlice = createSlice({
   name: "ui",
-  initialState,
+  initialState: { sidebarOpen: false },
   reducers: {
-    setView: (state, action) => {
-      state.currentView = action.payload;
-      state.sidebarOpen = false;
-    },
     toggleSidebar: (state) => {
       state.sidebarOpen = !state.sidebarOpen;
     },
@@ -22,5 +13,5 @@ const uiSlice = createSlice({
   },
 });
 
-export const { setView, toggleSidebar, closeSidebar } = uiSlice.actions;
+export const { toggleSidebar, closeSidebar } = uiSlice.actions;
 export default uiSlice.reducer;
