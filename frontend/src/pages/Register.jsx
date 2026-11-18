@@ -28,7 +28,7 @@ const Register = () => {
   );
 
   if (token && user) {
-    return <Navigate to={user.role === "admin" ? "/admin" : "/"} replace />;
+    return <Navigate to={user.role === "admin" ? "/admin" : "/tienda"} replace />;
   }
 
   const handleRegister = async ({ name, email, password }) => {

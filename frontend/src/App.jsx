@@ -13,6 +13,9 @@ import About from "./sections/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import PublicLayout from "./components/layout/PublicLayout";
+import Store from "./pages/Store";
+import Cart from "./pages/Cart";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,6 +29,10 @@ const App = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
+       <Route element={<PublicLayout />}>
+        <Route path="/tienda" element={<Store />} />
+        <Route path="/carrito" element={<Cart />} />
+      </Route>
 
       <Route path="/admin" element={<ProtectedRoute role="admin" />}>
         <Route element={<Layout />}>

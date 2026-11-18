@@ -27,7 +27,7 @@ const Login = () => {
   );
 
   if (token && user) {
-    const destination = user.role === "admin" ? (location.state?.from?.pathname ?? "/admin") : "/";
+    const destination = user.role === "admin" ? (location.state?.from?.pathname ?? "/admin") : "/tienda";
     return <Navigate to={destination} replace />;
   }
 
