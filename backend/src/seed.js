@@ -2,6 +2,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import Category from "./models/Category.js";
 import Product from "./models/Product.js";
+import User from "./models/User.js";
 
 const seed = async () => {
   try {
@@ -33,6 +34,18 @@ const seed = async () => {
     }));
 
     await Product.insertMany(products);
+      const adminEmail = process.env.ADMIN_EMAIL ?? "admin@sephira.com";
+    const adminExists = await User.findOne({ email: adminEmail });
+
+    if (!adminExists) {
+      await User.create({
+        name: "Administrador",
+        email: adminEmail,
+        password: process.env.ADMIN_PASSWORD ?? "Admin1234",
+        role: "admin",
+      });
+      console.log(`Administrador creado: ${adminEmail}`);
+    }
 
     console.log(`Seed listo: ${categories.length} categorías y ${products.length} productos`);
   } catch (error) {
