@@ -1,36 +1,53 @@
-# SÉPHIRA — Panel de administración
+# SÉPHIRA: tienda y panel de administración
 
-Panel de administración para una tienda: gestiona productos, categorías y pedidos, con un dashboard de métricas. Desarrollado con React, Tailwind CSS, Redux Toolkit y un backend propio en Node/Express conectado a MongoDB Atlas.
+Es una aplicación web de tienda con dos caras: una **parte pública** donde cualquier persona ve el catálogo, arma un carrito y realiza pedidos, y una **parte privada** donde solo el administrador gestiona productos, categorías y pedidos y consulta métricas. Desarrollada con React, Tailwind CSS, Redux Toolkit, React Router y un backend propio en Node/Express con MongoDB Atlas.
 
-SÉPHIRA comenzó como un catálogo interactivo en JavaScript puro (Actividad 1, carpeta `act1-vanilla/`) y en esta actividad evoluciona a un panel de gestión con frameworks de frontend, estado global y base de datos.
+SÉPHIRA comenzó como un catálogo interactivo en JavaScript puro y fue evolucionando a un panel de administración con estado global y incorpora navegación con rutas reales, autenticación y acceso protegido.
 
 ## Funcionalidades
 
-- CRUD completo de **productos**, **categorías** y **pedidos**.
-- Formularios con validación en el cliente y en el servidor.
-- Tablas con búsqueda y filtros (por nombre, categoría y estado).
-- Pedidos armados con un carrito; el total lo calcula el backend.
+**Parte pública**
+- Landing, catálogo de productos con búsqueda y filtro por categoría.
+- Carrito global que se conserva al recargar la página.
+- Compra que crea un pedido en la base de datos.
+- Registro e inicio de sesión de clientes.
+
+**Parte privada (solo administrador)**
 - Dashboard con ingresos, conteos, pedidos por estado y últimos pedidos.
-- Sidebar y diseño responsive.
-- Navegación entre secciones controlada por estado de Redux (sin react router).
+- CRUD completo de productos, categorías y pedidos, con formularios validados y tablas con búsqueda y filtros.
+- Cambio de estado de los pedidos desde la tabla.
 
-## Secciones
+**Navegación y seguridad**
+- SPA con React Router: cada sección tiene su propia URL y se navega sin recargar la página.
+- Rutas protegidas por sesión y por rol, con redirección al login.
+- Página 404 para direcciones inexistentes.
+- Contraseñas cifradas, autenticación con token JWT y rutas del backend protegidas.
 
-1. Landing
-2. Dashboard
-3. Productos
-4. Categorías
-5. Pedidos
-6. Acerca de
+## Mapa de rutas del frontend
+
+| Ruta | Acceso | Descripción |
+| --- | --- | --- |
+| `/` | Público | Landing |
+| `/tienda` | Público | Catálogo de productos |
+| `/carrito` | Público | Carrito y confirmación del pedido |
+| `/login` | Público | Inicio de sesión |
+| `/registro` | Público | Registro de clientes |
+| `/admin` | Administrador | Dashboard |
+| `/admin/productos` | Administrador | Gestión de productos |
+| `/admin/categorias` | Administrador | Gestión de categorías |
+| `/admin/pedidos` | Administrador | Gestión de pedidos |
+| `/admin/acerca` | Administrador | Información del proyecto |
+| `*` | Público | Página 404 |
 
 ## Tecnologías
 
 | Capa | Tecnología |
 | --- | --- |
-| Frontend | React, Vite, Tailwind CSS |
+| Frontend | React, Vite, Tailwind CSS, React Router |
 | Estado global | Redux Toolkit, React Redux |
 | Backend | Node.js, Express |
 | Base de datos | MongoDB Atlas, Mongoose |
+| Seguridad | JSON Web Tokens (jsonwebtoken), bcryptjs |
 
 ## Custom hooks
 
@@ -39,36 +56,38 @@ SÉPHIRA comenzó como un catálogo interactivo en JavaScript puro (Actividad 1,
 | `useModal` | Abrir y cerrar modales, guardando el elemento en edición |
 | `useForm` | Valores, validación, errores y envío de formularios |
 | `useDebounce` | Retrasar la búsqueda mientras el usuario escribe |
-| `useCart` | Carrito de productos de un pedido, con totales |
+| `useCart` | Carrito de productos del formulario de pedidos del panel |
 | `useFetch` | Cargar datos con estados de carga y error |
 
 ## Estructura del repositorio
 
 ```text
-├── act1-vanilla/        Actividad 1 (catálogo en JavaScript puro)
+├── act1-vanilla/          Actividad 1 (catálogo en JavaScript puro)
 ├── backend/
 │   └── src/
-│       ├── config/      Conexión a MongoDB
-│       ├── models/      Esquemas de Mongoose
-│       ├── controllers/ Lógica de cada endpoint
-│       ├── routes/      Rutas de la API
-│       ├── seed.js      Datos de ejemplo
+│       ├── config/        Conexión a MongoDB
+│       ├── models/        Esquemas de Mongoose (User, Category, Product, Order)
+│       ├── controllers/   Lógica de cada endpoint
+│       ├── middleware/    Autenticación y permisos (protect, adminOnly)
+│       ├── routes/        Rutas de la API
+│       ├── seed.js        Datos de ejemplo y usuario administrador
 │       └── server.js
 └── frontend/
     └── src/
-        ├── components/  layout, ui, shared, products, orders, categories
+        ├── components/    layout, ui, shared, store, products, orders, categories
         ├── constants/
-        ├── hooks/       Los 5 custom hooks
-        ├── sections/    Las secciones de la app
-        ├── services/    Llamadas al backend
-        ├── store/       Redux (store y slices)
+        ├── hooks/         Los 5 custom hooks
+        ├── pages/         Landing, tienda, carrito, login, registro y 404
+        ├── sections/      Secciones del panel de administración
+        ├── services/      Llamadas al backend
+        ├── store/         Redux (store y slices)
         └── utils/
 ```
 
 ## Requisitos previos
 
-- **Node.js** 18.11 o superior (recomendado 20 o más). Verifica con `node -v`.
-- **npm**.
+- **Node.js** 18.11 o superior.
+- **npm** .
 - **Git**.
 - Una cuenta gratuita de **MongoDB Atlas**.
 - Conexión a internet.
@@ -86,7 +105,7 @@ cd Sephira-catalogo-interactivo
 
 1. Crea un clúster gratuito (M0) en MongoDB Atlas.
 2. En **Database Access**, crea un usuario con contraseña (evita caracteres especiales como `@`, `:` o `/`).
-3. En **Network Access**, agrega `0.0.0.0/0` para permitir la conexión desde cualquier IP (solo para desarrollo y pruebas).
+3. En **Network Access**, agrega tu ip 
 4. En **Connect → Drivers**, copia la cadena de conexión (`mongodb+srv://...`), reemplaza `<password>` por tu contraseña y agrega el nombre de la base de datos antes del `?`, por ejemplo `.../sephira?retryWrites=true&w=majority`.
 
 ### 3. Backend
@@ -101,14 +120,19 @@ Crea el archivo `backend/.env` (usa `backend/.env.example` como plantilla):
 ```env
 PORT=4000
 MONGODB_URI=tu_cadena_de_conexion_de_atlas
+JWT_SECRET=una_clave_secreta_cualquiera
+JWT_EXPIRES_IN=7d
+ADMIN_EMAIL=admin@sephira.com
+ADMIN_PASSWORD=Admin1234
 ```
 
-Carga los datos de ejemplo:
+Carga los datos de ejemplo y crea el usuario administrador:
 
 ```bash
 npm run seed
 ```
 
+> **Atención:** `npm run seed` borra todos los productos y categorías existentes antes de insertar los de ejemplo, y necesita conexión a internet. No borra usuarios ni pedidos. El administrador solo se crea si no existe.
 
 Inicia el servidor:
 
@@ -128,38 +152,46 @@ npm install
 npm run dev
 ```
 
-Abre la dirección que muestra Vite (normalmente `http://localhost:5173`).
+Abre la dirección que muestra Vite
 
-Por defecto el frontend usa `http://localhost:4000/api`. Si cambias el puerto o la dirección del backend, crea `frontend/.env` con:
+### 5. Usuarios de prueba
 
-```env
-VITE_API_URL=http://localhost:4000/api
-```
+| Rol | Correo | Contraseña |
+| --- | --- | --- |
+| Administrador | `admin@sephira.com` | `Admin1234` |
+| Cliente | Se crea desde `/registro` | La que elijas |
 
-### 5. Compilar para producción (opcional)
-
-```bash
-cd frontend
-npm run build
-```
+Son los valores por defecto del seed (se cambian con `ADMIN_EMAIL` y `ADMIN_PASSWORD` en el `.env`). El administrador accede al panel en `/admin`; un cliente no puede entrar al panel aunque escriba la dirección a mano.
 
 ## API REST
 
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| GET | `/api/health` | Estado del servidor |
-| GET, POST | `/api/categories` | Listar y crear categorías |
-| PUT, DELETE | `/api/categories/:id` | Editar y eliminar (no se elimina si tiene productos) |
-| GET, POST | `/api/products` | Listar y crear productos |
-| PUT, DELETE | `/api/products/:id` | Editar y eliminar productos |
-| GET, POST | `/api/orders` | Listar y crear pedidos (el total lo calcula el servidor) |
-| PUT, DELETE | `/api/orders/:id` | Editar datos y estado, eliminar pedidos |
-| GET | `/api/stats` | Métricas del dashboard |
+| Método | Ruta | Acceso | Descripción |
+| --- | --- | --- | --- |
+| GET | `/api/health` | Público | Estado del servidor |
+| POST | `/api/auth/register` | Público | Registrar un cliente |
+| POST | `/api/auth/login` | Público | Iniciar sesión y recibir el token |
+| GET | `/api/auth/me` | Autenticado | Datos del usuario de la sesión |
+| GET | `/api/categories` | Público | Listar categorías |
+| POST, PUT, DELETE | `/api/categories` y `/api/categories/:id` | Administrador | Crear, editar y eliminar (no se elimina si tiene productos) |
+| GET | `/api/products` | Público | Listar productos |
+| POST, PUT, DELETE | `/api/products` y `/api/products/:id` | Administrador | Crear, editar y eliminar productos |
+| POST | `/api/orders` | Público | Crear un pedido (el total lo calcula el servidor) |
+| GET, PUT, DELETE | `/api/orders` y `/api/orders/:id` | Administrador | Listar, editar datos y estado, eliminar pedidos |
+| GET | `/api/stats` | Administrador | Métricas del dashboard |
 
-## Limitaciones conocidas y mejoras futuras
+Las rutas protegidas esperan el encabezado `Authorization: Bearer <token>`. Sin token responden `401`; con un token de un usuario sin permisos, `403`.
 
-- No hay autenticación: cualquier persona con acceso a la app puede entrar al panel.
-- Crear un pedido no descuenta el stock de los productos.
-- Tienda pública con catálogo y carrito para clientes
-- ## Video de demostración
-- https://youtu.be/P8bUNMmxVbo
+## Seguridad
+
+- Las contraseñas se guardan cifradas con bcrypt y nunca se devuelven en las respuestas.
+- Al registrarse, todo usuario es cliente: el rol no se acepta desde el formulario.
+- El token JWT firmado con `JWT_SECRET` identifica la sesión y se envía en cada petición.
+- El acceso se restringe en dos niveles: en el frontend con rutas protegidas (`ProtectedRoute`), y en el backend con middleware de autenticación y de rol, que es la protección real.
+- El archivo `.env` no se sube al repositorio.
+
+## Repositorio
+
+https://github.com/luisfernandez270406-ux/Sephira-catalogo-interactivo
+
+## Video demostrativo
+
