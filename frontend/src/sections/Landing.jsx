@@ -15,6 +15,12 @@ const Landing = () => {
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
+          to="/tienda"
+          className="rounded-lg bg-white px-8 py-3 font-semibold text-primary-dark shadow-lg transition hover:bg-white/90"
+        >
+          Ver tienda
+        </Link>
+        <Link
           to="/admin"
           className="rounded-lg bg-accent px-8 py-3 font-semibold text-white shadow-lg transition hover:brightness-110"
         >
